@@ -1,0 +1,28 @@
+[
+  {
+    "ContainingType": "kt13_10.Controllers.CauThuAPIController",
+    "Method": "GetCauThuTheoMa",
+    "RelativePath": "api/CauThuAPI/{matrandau}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "matrandau",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[kt13_10.Models.CauThuModels.CauThuTheoMa, kt13_10, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  }
+]

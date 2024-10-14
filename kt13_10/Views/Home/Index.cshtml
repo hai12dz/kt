@@ -1,0 +1,134 @@
+﻿@model List<Trandau>
+
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_LayoutKiemTra.cshtml";
+
+}
+@*@await Html.PartialAsync("Header", Model)*@
+
+
+<div id="wrapper" class="container">
+    <section class="navbar main-menu">
+        <div class="navbar-inner main-menu">
+            <a href="index.html" class="logo pull-left"><img src="../themes/images/logo.png" class="site_logo" alt=""></a>
+            <nav id="menu" class="pull-right">
+
+                <ul>
+                    @foreach (var item in Model)
+                    {
+
+
+                        var getUrl = "https://localhost:7075/api/cauthuapi/" + @item.TranDauId;
+                        <li> <a  onclick="showCauThuTheoMa('@getUrl')">@item.TranDauId</a></li>
+
+                    }
+                </ul>
+
+
+            </nav>
+        </div>
+    </section>
+
+
+
+
+    <section class="homepage-slider" id="home-slider">
+        <div class="flexslider">
+            <ul class="slides">
+                <li>
+                    <img src="../themes/images/carousel/banner-1.jpg" alt="" />
+                </li>
+                <li>
+                    <img src="../themes/images/carousel/banner-2.jpg" alt="" />
+                    <div class="intro">
+                        <h1>Mid season sale</h1>
+                        <p><span>Up to 50% Off</span></p>
+                        <p><span>On selected items online and in stores</span></p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+
+
+
+
+    @section DanhSachCauThu {
+        <ul>
+            @foreach (var item in ViewBag.DanhSachCauThu)
+            {
+                <li class="span3">
+                    <div class="product-box">
+                        <span class="sale_tag"></span>
+                        <p>
+
+                            <a href="product_detail.html">
+                                <img src="@Url.Content("../images/" + item.Anh)" alt="" />
+
+                            </a>
+
+
+                        </p>
+
+
+                        <a href="product_detail.html" class="title">@item.HoVaTen</a><br />
+                        <a href="products.html" class="category">@item.Ngaysinh</a>
+                        <p class="price">@item.QuocTich</p>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+
+
+    <script>
+        function showCauThuTheoMa(getUrl) {
+            console.log('Fetching from URL:', getUrl); // Kiểm tra URL
+            fetch(getUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Data received:', data); // Kiểm tra dữ liệu
+                    if (!data) {
+                        throw new Error('Data is null or undefined');
+                    }
+                    let str = '';
+                    if (Array.isArray(data) && data.length > 0) {
+                        data.forEach(val => {
+                            console.log('Player:', val); // Log chi tiết từng cầu thủ
+                            str += '<ul>';
+                            str += '<li class="span3">';
+                            str += '<div class="product-box">';
+                            str += '<span class="sale_tag"></span>';
+                            str += '<p>';
+                            str += '<a href="product_detail.html">';
+                            str += '<img src="../images/' + (val.Anh) + '" alt="" />';
+                            str += '</a>';
+                            str += '</p>';
+                            str += '<a href="product_detail.html" class="title">' + (val.HoVaTen ? val.HoVaTen.trim() : 'Chưa có tên') + '</a><br />';
+                            str += '<a href="products.html" class="category">' + (val.Ngaysinh ? val.Ngaysinh.trim() : 'Chưa có ngày sinh') + '</a>';
+                            str += '<p class="price">' + (val.QuocTich ? val.QuocTich.trim() : 'Chưa có quốc tịch') + '</p>';
+                            str += '</div>';
+                            str += '</li>';
+                            str += '</ul>';
+                        });
+                    } else {
+                        str = '<p>No data available.</p>';
+                    }
+                    document.getElementById('displayCauThus').innerHTML = str;
+                })
+                .catch(error => {
+                    alert('Error: ' + error.message);
+                });
+        }
+    </script>
+
+
+
+

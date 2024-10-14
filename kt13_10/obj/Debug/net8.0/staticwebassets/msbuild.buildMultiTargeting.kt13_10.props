@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\kt13_10.props" />
+</Project>
