@@ -62,6 +62,7 @@
                 <li class="span3">
                     <div class="product-box">
                         <span class="sale_tag"></span>
+
                         <p>
 
                             <a href="product_detail.html">
@@ -87,14 +88,10 @@
     <script>
         function showCauThuTheoMa(getUrl) {
             console.log('Fetching from URL:', getUrl); // Kiểm tra URL
-            fetch(getUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok ' + response.statusText);
-                    }
-                    return response.json();
-                })
-                .then(data => {
+            $.ajax({
+                url: getUrl,
+                method: 'GET',
+                success: function (data) {
                     console.log('Data received:', data); // Kiểm tra dữ liệu
                     if (!data) {
                         throw new Error('Data is null or undefined');
@@ -115,21 +112,20 @@
                             str += '<a href="product_detail.html" class="title">' + (val.hoVaTen ? val.hoVaTen.trim() : 'Chưa có tên') + '</a><br />';
                             str += '<a href="products.html" class="category">' + (val.ngaysinh ? val.ngaysinh.trim() : 'Chưa có ngày sinh') + '</a>';
                             str += '<p class="price">' + (val.quocTich ? val.quocTich.trim() : 'Chưa có quốc tịch') + '</p>';
-                            str += '<a href="/Home/CapNhatCauThu?idCauThu=' + val.cauThuId + '" class="btn btn-warning">Sửa thông tin</a>';
+                            str += '<a href="/CapNhatCauThu?idCauThu=' + val.cauThuId + '" class="btn btn-warning">Sửa thông tin</a>';
                             str += '</div>';
                             str += '</li>';
                             str += '</ul>';
-
-
                         });
                     } else {
                         str = '<p>No data available.</p>';
                     }
                     document.getElementById('displayCauThus').innerHTML = str;
-                })
-                .catch(error => {
-                    alert('Error: ' + error.message);
-                });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('Error: ' + textStatus + ' - ' + errorThrown);
+                }
+            });
         }
     </script>
 
