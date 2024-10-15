@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace kt13_10.Models;
 
@@ -17,8 +18,9 @@ public partial class Cauthu
 
     public string? QuocTich { get; set; }
 
+    [RegularExpression(@"^\d+$", ErrorMessage = "Số áo chỉ được nhập số")]
     public string? SoAo { get; set; }
-
+    [RegularExpression(@"^.*\.png$", ErrorMessage = "File ảnh chỉ được có phần mở rộng .png")]
     public string? Anh { get; set; }
 
     public virtual Caulacbo? CauLacBo { get; set; }

@@ -20,7 +20,7 @@
 
 
                         var getUrl = "https://localhost:7075/api/cauthuapi/" + @item.TranDauId;
-                        <li> <a  onclick="showCauThuTheoMa('@getUrl')">@item.TranDauId</a></li>
+                        <li> <a onclick="showCauThuTheoMa('@getUrl')">@item.TranDauId</a></li>
 
                     }
                 </ul>
@@ -68,16 +68,17 @@
                                 <img src="@Url.Content("../images/" + item.Anh)" alt="" />
 
                             </a>
-
-
                         </p>
 
 
                         <a href="product_detail.html" class="title">@item.HoVaTen</a><br />
                         <a href="products.html" class="category">@item.Ngaysinh</a>
                         <p class="price">@item.QuocTich</p>
+                        <a asp-controller="Home" asp-action="CapNhatCauThu" asp-route-idCauThu="@item.CauThuId" class="btn btn-warning">Sửa thông tin</a>
+
                     </div>
                 </li>
+
             }
         </ul>
     }
@@ -108,15 +109,18 @@
                             str += '<span class="sale_tag"></span>';
                             str += '<p>';
                             str += '<a href="product_detail.html">';
-                            str += '<img src="../images/' + (val.Anh) + '" alt="" />';
+                            str += '<img src="../images/' + (val.anh ? val.anh : 'default-image.jpg') + '" alt="" />';
                             str += '</a>';
                             str += '</p>';
-                            str += '<a href="product_detail.html" class="title">' + (val.HoVaTen ? val.HoVaTen.trim() : 'Chưa có tên') + '</a><br />';
-                            str += '<a href="products.html" class="category">' + (val.Ngaysinh ? val.Ngaysinh.trim() : 'Chưa có ngày sinh') + '</a>';
-                            str += '<p class="price">' + (val.QuocTich ? val.QuocTich.trim() : 'Chưa có quốc tịch') + '</p>';
+                            str += '<a href="product_detail.html" class="title">' + (val.hoVaTen ? val.hoVaTen.trim() : 'Chưa có tên') + '</a><br />';
+                            str += '<a href="products.html" class="category">' + (val.ngaysinh ? val.ngaysinh.trim() : 'Chưa có ngày sinh') + '</a>';
+                            str += '<p class="price">' + (val.quocTich ? val.quocTich.trim() : 'Chưa có quốc tịch') + '</p>';
+                            str += '<a href="/Home/CapNhatCauThu?idCauThu=' + val.cauThuId + '" class="btn btn-warning">Sửa thông tin</a>';
                             str += '</div>';
                             str += '</li>';
                             str += '</ul>';
+
+
                         });
                     } else {
                         str = '<p>No data available.</p>';
@@ -128,6 +132,7 @@
                 });
         }
     </script>
+
 
 
 
